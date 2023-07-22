@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Tienda de Licores</title>
+    <link rel="stylesheet" href="estilo.CSS" </head>
+</head>
+
+<body>
+    <h1>Tienda de Licores</h1>
+    <button onclick="agregarLicor()">Agregar Licor</button>
+    <button onclick="eliminarLicor()">Eliminar Licor</button>
+    <ul id="listaLicores">
+        <!-- Aquí se mostrarán los licores agregados -->
+    </ul>
+
+    <script>
+        const licores = [];
+
+        function agregarLicor() {
+            const nombre = prompt("Ingrese el nombre del licor:");
+            if (nombre) {
+                const precio = parseFloat(prompt("Ingrese el precio del licor:"));
+                const vendido = confirm("¿El licor está vendido?");
+
+                const licor = {
+                    nombre,
+                    precio,
+                    vendido,
+                };
+
+                licores.push(licor);
+                mostrarLicores();
+            }
+        }
+
+        function eliminarLicor() {
+            const nombre = prompt("Ingrese el nombre del licor a eliminar:");
+            const indice = licores.findIndex((licor) => licor.nombre === nombre);
+
+            if (indice !== -1) {
+                licores.splice(indice, 1);
+                mostrarLicores();
+            } else {
+                alert("El licor no existe en el inventario.");
+            }
+        }
+
+        function mostrarLicores() {
+            const lista = document.getElementById("listaLicores");
+            lista.innerHTML = "";
+
+            licores.forEach((licor) => {
+                const listItem = document.createElement("li");
+                listItem.innerHTML = `
+          <span>${licor.nombre}</span>
+          <span>Precio: $${licor.precio}</span>
+          <span>${licor.vendido ? "Vendido" : "No Vendido"}</span>
+        `;
+                lista.appendChild(listItem);
+            });
+        }
+    </script>
+</body>
+
+</html>
